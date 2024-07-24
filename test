@@ -41,4 +41,8 @@ fetch_and_process() {
 }
 
 # Read portfolio names from the input file and process each one
-while
+while IFS= read -r portfolio_name; do
+    fetch_and_process "$portfolio_name"
+done < "$PORTFOLIO_FILE"
+
+echo "Output written to $OUTPUT_CSV"
