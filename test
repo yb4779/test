@@ -25,6 +25,10 @@ fetch_and_process() {
     
     # Fetch JSON data using curl
     local json_data=$(curl -s "$url")
+
+    # Debugging: Print the fetched JSON data
+    echo "Fetched JSON for portfolio '$portfolio_name':"
+    echo "$json_data"
     
     # Extract "book id" associated with the given "PortfolioName" using jq
     local book_ids=$(echo "$json_data" | jq -r --arg PORTFOLIO_NAME "$portfolio_name" '
