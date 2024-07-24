@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# URL to fetch JSON data
+URL="http://uat.controls-runtime.site.gs.com:8080/ssps/Current/CE%20IRM?function=irm&PortfolioName=GSCN%20Macro%20Portfolio"
+
+# Portfolio name to search for
+PORTFOLIO_NAME="GSCN Macro Portfolio"
+
+# Fetch JSON data using curl
+json_data=$(curl -s "$URL")
+
+# Extract "book id" associated with the given "PortfolioName" using jq
+book_id=$(echo "$json_data" | jq -r --arg PORTFOLIO_NAME "$PORTFOLIO_NAME" '
+    .[] | select(.PortfolioName == $PORTFOLIO_NAME) | .["book id"]')
+
+# Check if book_id is not empty
+if [ -n "$book_id" ]; then
+    echo "Book ID for portfolio '$PORTFOLIO_NAME': $book_id"
+else
+    echo "Portfolio name '$PORTFOLIO_NAME' not found in the JSON data."
+fi
