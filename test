@@ -1,3 +1,5 @@
+./get_book_ids.sh portfolios.txt output.csv
+
 #!/bin/bash
 
 # Check if the correct number of arguments is provided
